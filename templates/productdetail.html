@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <h3>Product: {{product.title}}</h3>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{product.image.url}}" alt="" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <h4>{{product.title}} <i class="fa fa-eye">{{product.view_count}}</i></h4>
+            <h5>Category : {{product.category}}</h5>
+            <h5>Price : <strike>Rs. {{product.marked_price}}</strike> Rs. {{product.selling_price}}</h5>
+            <p class="text-info">Warranty : {{product.warranty}}</p>
+            <p class="text-info">Return Policy : {{product.return_policy}}</p>
+            <p class="text-info">Description : {{product.description}}</p>
+            <hr>
+            <a href="" class="btn btn-primary">Add To Cart</a>
+            <hr>
+        </div>
+    </div>
+</div>
+<!-- Brand Start -->
+
+<div class="brand">
+    <div class="container-fluid">
+        <div class="brand-slider">
+            <div class="brand-item"><img src="{% static 'img/brand-1.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-2.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-3.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-4.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-5.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-6.png' %}" alt=""></div>
+        </div>
+    </div>
+</div>
+
+<!-- Brand End -->
+
+
+
+
+{% endblock %}

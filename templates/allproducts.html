@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    {% for cat in allcategories %}
+    <hr>
+    <h2>{{cat.title}}</h2>
+    <hr>
+    <div class="row">
+        {% for p in cat.product_set.all %}
+        <div class="col-md-4">
+            <div class="m-4">
+                <h3><a href="{% url 'ecomapp:productdetail' p.slug %}">{{p.title}}</a></h3>
+                <img src="{{p.image.url}}" alt="" width="250" height=250; object-fit:cover >
+                <p class="mt-3">Price: <strike>Rs. {{p.marked_price}}</strike> Rs. {{p.selling_price}}</p>
+                <a href="" class="btn btn-primary">Add To Cart</a>
+            </div>
+        </div>
+        {% endfor %}  
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Brand Start -->
+
+<div class="brand">
+    <div class="container-fluid">
+        <div class="brand-slider">
+            <div class="brand-item"><img src="{% static 'img/brand-1.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-2.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-3.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-4.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-5.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-6.png' %}" alt=""></div>
+        </div>
+    </div>
+</div>
+
+<!-- Brand End -->
+
+
+{% endblock %}
