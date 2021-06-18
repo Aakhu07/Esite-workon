@@ -54,31 +54,20 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto">
                             <a href="{% url 'ecomapp:home' %}" class="nav-item nav-link active">Home</a>
-                            <a href="/cart/my_cart" class="nav-item nav-link active">Cart</a>
+                            <a href="{% url 'ecomapp:mycart' %}" class="nav-item nav-link active">Cart</a>
                             <a href="{% url 'ecomapp:allproducts' %}" class="nav-item nav-link active">Categories</a>
-                            </div>
                         </div>
-                    {% if user.is_authenticated %}
+                    </div> 
                         <div class="navbar-nav ml-auto">
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{user.username}}</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
                                 <div class="dropdown-menu">
-                                    <a href="/accounts/logout" class="dropdown-item">Logout</a>
+                                    <a href="#" class="dropdown-item">Login</a>
+                                    <a href="#" class="dropdown-item">Register</a>
                                 </div>
                             </div>
                         </div>
-                    {% else %}
-                        <div class="navbar-nav ml-auto">
-                            <div class="nav-item dropdown">
-                                <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
-                                <div class="dropdown-menu">
-                                    <a href="/accounts/login" class="dropdown-item">Login</a>
-                                    <a href="/signup" class="dropdown-item">Register</a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                    </div>
+                    </div>    
                 </nav>
             </div>
         </div>

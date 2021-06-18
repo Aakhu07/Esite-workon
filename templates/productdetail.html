@@ -17,7 +17,7 @@
             <p class="text-info">Return Policy : {{product.return_policy}}</p>
             <p class="text-info">Description : {{product.description}}</p>
             <hr>
-            <a href="" class="btn btn-primary">Add To Cart</a>
+            <a href="{% url 'ecomapp:addtocart' product.id %}" class="btn btn-primary">Add To Cart</a>
             <hr>
         </div>
     </div>
