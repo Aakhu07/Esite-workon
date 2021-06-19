@@ -49,16 +49,16 @@ class CartProduct(models.Model):
 
 
 ORDER_STATUS= (
-    ("order received","Order received"),
-    ("order processing","Order processing"),
-    ("order completed","Order completed"),
-    ("order cancled","Order cancled"),
-    ("on the way","On the way")
+    ("Order Received","Order Received"),
+    ("Order Processing","Order Processing"),
+    ("Order Completed","Order Completed"),
+    ("Order Cancled","Order Cancled"),
+    ("On the way","On the way")
 )
 class Order(models.Model):
     cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
     ordered_by = models.CharField(max_length=200)
-    Shipping_address = models.CharField(max_length=200)
+    shipping_address = models.CharField(max_length=200)
     mobile = models.CharField(max_length=10)
     email = models.EmailField(null=True,blank=True)
     subtotal = models.PositiveIntegerField() 

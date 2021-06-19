@@ -96,11 +96,11 @@
                         <div class="user">
                             <a href="wishlist.html" class="btn btn-wishlist">
                                 <i class="fa fa-heart"></i>
-                                <span class="badge badge-info">10</span>
+                                <span class="badge badge-info"></span>
                             </a>
-                            <a href="/cart/my_cart" class="btn btn-cart">
+                            <a href="" class="btn btn-cart">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span class="badge badge-info">5</span>
+                                <span class="badge badge-info">{{ request.session.cart_id}}</span>
                             </a>
                         </div>
                     </div>
@@ -111,6 +111,22 @@
   {% block content %}
 
   {% endblock %}
+
+                 <!-- Brand Start -->
+    <div class="brand">
+        <div class="container-fluid">
+            <div class="brand-slider">
+                <div class="brand-item"><img src="{% static 'img/brand-1.png' %}" alt=""></div>
+                <div class="brand-item"><img src="{% static 'img/brand-2.png' %}" alt=""></div>
+                <div class="brand-item"><img src="{% static 'img/brand-3.png' %}" alt=""></div>
+                <div class="brand-item"><img src="{% static 'img/brand-4.png' %}" alt=""></div>
+                <div class="brand-item"><img src="{% static 'img/brand-5.png' %}" alt=""></div>
+                <div class="brand-item"><img src="{% static 'img/brand-6.png' %}" alt=""></div>
+            </div>
+        </div>
+    </div>
+                <!-- Brand End --> 
+
     <!-- Review Start -->
     <div class="review">
         <div class="container-fluid">

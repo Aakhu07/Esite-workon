@@ -41,15 +41,28 @@
                                     <td>{{cp.quantity}}</td>
                                     <td>{{cp.subtotal}}</td>
                                     <td>
-                                        <a href="{% url 'ecomapp:managecart' cp.id %}?action=inc" class="btn btn-primary">+</a>
-                                        <a href="{% url 'ecomapp:managecart' cp.id %}?action=dcr" class="btn btn-warning">-</a>
-                                        <a href="{% url 'ecomapp:managecart' cp.id %}?action=rmv" class="btn btn-danger">x</a>
+                                        <a href="{% url 'ecomapp:managecart' cp.id %}?action=inc" class="btn">+</a>
+                                        <a href="{% url 'ecomapp:managecart' cp.id %}?action=dcr" class="btn">-</a>
+                                        <a href="{% url 'ecomapp:managecart' cp.id %}?action=rmv" class="btn">x</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                                 <tr>
                                     <th colspan="4" class="text-right">Total</th>
                                     <th> Rs. {{cart.total}}</th>
+                                </tr>    
+                                {% if cart.cartproduct_set.all %}
+                                <tr>
+                                    <th><a class="btn" href="{% url 'ecomapp:emptycart' %}">Empty Cart</a></th>
+                                </tr>
+                                {% endif %}
+                                {% if cart.cartproduct_set.all %}
+                                <tr>
+                                    <th><a class="btn" href="{% url 'ecomapp:checkout' %}">Checkout</a></th>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <th><a href="/" class="btn">Shopping Again</a></th>
                                 </tr>
                             </tbody>
                         </table>
