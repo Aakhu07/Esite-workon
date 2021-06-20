@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'ecomapp:mycart' %}">Cart</a></li>
+            <li class="breadcrumb-item active">Register</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<div class="conatiner">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h3>Customer Registeration Form</h3>
+            <hr>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button class="btn">Customer Registeration <Form></Form></button>
+            </form>
+            <hr>
+            <p>Already have account <a href="{% url 'ecomapp:customerlogin' %}" class="btn">Login Now</a></p>
+        </div>
+    </div>
+</div>        
+        
+
+ {% endblock %}

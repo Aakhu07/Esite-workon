@@ -53,21 +53,18 @@
 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto">
-                            <a href="{% url 'ecomapp:home' %}" class="nav-item nav-link active">Home</a>
-                            <a href="{% url 'ecomapp:mycart' %}" class="nav-item nav-link active">Cart</a>
-                            <a href="{% url 'ecomapp:allproducts' %}" class="nav-item nav-link active">Categories</a>
+                            <a href="{% url 'ecomapp:home' %}" class="nav-item nav-link active">Home</a> |
+                            <a href="{% url 'ecomapp:mycart' %}" class="nav-item nav-link active">Cart</a> |
+                            <a href="{% url 'ecomapp:allproducts' %}" class="nav-item nav-link active">Categories</a> |
+                            {% if request.user.customer %}
+                            Welcome {{request.user.username}} |
+                            <a href="{% url 'ecomapp:customerlogout' %}" class="nav-item nav-link active">Logout</a> |
+                            {% else %}
+                            <a href="{% url 'ecomapp:customerregistration' %}" class="nav-item nav-link active">Registeration</a> |
+                            <a href="{% url 'ecomapp:customerlogin' %}" class="nav-item nav-link active">Login</a> |
+                            {% endif %}
                         </div>
-                    </div> 
-                        <div class="navbar-nav ml-auto">
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
-                                <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item">Login</a>
-                                    <a href="#" class="dropdown-item">Register</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>    
+                    </div>   
                 </nav>
             </div>
         </div>
@@ -100,7 +97,7 @@
                             </a>
                             <a href="" class="btn btn-cart">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span class="badge badge-info">{{ request.session.cart_id}}</span>
+                                <span class="badge badge-info">{{request.session.cart_id}}</span>
                             </a>
                         </div>
                     </div>

@@ -11,4 +11,7 @@ urlpatterns = [
     path("manage-cart/<int:cp_id>/", ManageCartView.as_view(), name ="managecart"),
     path("empty-cart/", EmptyCartView.as_view(), name ="emptycart"),
     path("checkout/", CheckoutView.as_view(), name ="checkout"),
+    path("register/", CustomerRegistrationView.as_view(), name ="customerregistration"),
+    path("logout/", CustomerLogoutView.as_view(), name ="customerlogout"),
+    path("login/", CustomerLoginView.as_view(), name ="customerlogin"),
 ]
