@@ -6,15 +6,26 @@ from .forms import CheckoutForm, CustomerRegistrationForm, CustomerLoginForm
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 
-class HomeView(TemplateView):
+class EcomMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        cart_id = request.session.get("cart_id")
+        if cart_id:
+            cart_obj = Cart.objects.get(id=cart_id)
+            if request.user.is_authenticated and request.user.customer:
+                cart_obj.customer = request.user.customer
+                cart_obj.save()
+        return super().dispatch(request, *args, **kwargs)        
+
+class HomeView(EcomMixin, TemplateView):
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['product_list'] = Product.objects.all().order_by("-id")
+        context['ads'] = Ad.objects.all()
         return context
 
-class AllProductsView(TemplateView):
+class AllProductsView(EcomMixin, TemplateView):
     template_name = "allproducts.html"
 
     def get_context_data(self, **kwargs):
@@ -22,7 +33,7 @@ class AllProductsView(TemplateView):
         context['allcategories'] = Category.objects.all()
         return context
 
-class ProductDetailView(TemplateView):
+class ProductDetailView(EcomMixin, TemplateView):
     template_name = "productdetail.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -33,7 +44,7 @@ class ProductDetailView(TemplateView):
         context['product'] = product
         return context
 
-class AddToCartView(TemplateView):
+class AddToCartView(EcomMixin, TemplateView):
     template_name = "addtocart.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -69,7 +80,7 @@ class AddToCartView(TemplateView):
             cart_obj.save()                         
         return context
 
-class MyCartView(TemplateView):
+class MyCartView(EcomMixin, TemplateView):
     template_name = "mycart.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -81,7 +92,7 @@ class MyCartView(TemplateView):
         context['cart'] = cart        
         return context
 
-class ManageCartView(TemplateView):
+class ManageCartView(EcomMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         cp_id = self.kwargs["cp_id"]
         action = request.GET.get("action")
@@ -109,7 +120,7 @@ class ManageCartView(TemplateView):
             pass    
         return redirect("ecomapp:mycart")
 
-class EmptyCartView(TemplateView):
+class EmptyCartView(EcomMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         cart_id = request.session.get("cart_id",None)
         if cart_id :
@@ -119,10 +130,18 @@ class EmptyCartView(TemplateView):
             cart.save()
         return redirect("ecomapp:mycart")    
 
-class CheckoutView(CreateView):
+class CheckoutView(EcomMixin, CreateView):
     template_name = "checkout.html"
     form_class = CheckoutForm
     success_url = reverse_lazy("ecomapp:home")
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.customer:
+            pass
+        else:
+            return redirect("/login/?next=/checkout/")
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart_id = self.request.session.get("cart_id",None)
@@ -159,7 +178,14 @@ class CustomerRegistrationView(CreateView):
         user = User.objects.create_user(username,email,password)
         form.instance.user = user
         login(self.request, user)
-        return super().form_valid(form)                   
+        return super().form_valid(form) 
+
+    def get_success_url(self):
+        if "next" in self.request.GET:
+            next_url = self.request.GET.get("next")
+            return next_url
+        else:    
+            return self.get_success_url                       
 
 class CustomerLogoutView(View):
     def get(self, request):
@@ -179,4 +205,11 @@ class CustomerLoginView(FormView):
             login(self.request, usr)
         else:
             return render(self.request,self.template_name, {"form": self.form_class, "error":"Invalid Credential"})    
-        return super().form_valid(form)    
+        return super().form_valid(form)  
+
+    def get_success_url(self):
+        if "next" in self.request.GET:
+            next_url = self.request.GET.get("next")
+            return next_url
+        else:    
+            return self.get_success_url     

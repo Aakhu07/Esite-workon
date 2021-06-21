@@ -22,13 +22,14 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 {{form.as_p}}
-                <button class="btn">Customer Login Form <Form></Form></button>
+                <button class="btn">Customer Login<Form></Form></button>
                 {% if error %}
                 <li style="color: aqua;">{{error}}</li>
                 {% endif %}
             </form>
             <hr>
-            <p>Don't have account ? <a href="{% url 'ecomapp:customerregistration' %}" class="btn">Register Now</a></p>
+            <p>Don't have account ? <a href="{% url 'ecomapp:customerregistration' %}
+                {% if request.GET.next %}?next={{request.GET.next}}{% endif %}" class="btn">Register Now</a></p>
         </div>
     </div>
 </div>        

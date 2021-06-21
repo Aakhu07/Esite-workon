@@ -39,18 +39,25 @@
                     </div>
                     <div class="col-md-3">
                         <div class="header-img">
+                            {% for ad in ads %}
+                            {% if ad.rank == 1 %}
                             <div class="img-item">
-                                <img src="{% static 'img/ads1.jpg' %}" />
+                                <img src="{{ad.image.url}}" />
                                 <a class="img-text" href="http://nagennews.com" target="_blank">
+                                    <p>{{ad.description}}</p>
                                 </a>
                             </div>
+                            {% elif ad.rank == 2 %}
                             <div class="img-item">
-                                <img src="{% static 'img/ads3.jpg' %}" />
+                                <img src="{{ad.image.url}}" />
                                 <a class="img-text" href="http://nagennews.com" target="_blank">
+                                    <p>{{ad.description}}</p>
                                 </a>
                             </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
