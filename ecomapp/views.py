@@ -18,7 +18,6 @@ class EcomMixin(object):
 
 class HomeView(EcomMixin, TemplateView):
     template_name = "home.html"
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['product_list'] = Product.objects.all().order_by("-id")
@@ -27,7 +26,6 @@ class HomeView(EcomMixin, TemplateView):
 
 class AllProductsView(EcomMixin, TemplateView):
     template_name = "allproducts.html"
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['allcategories'] = Category.objects.all()
@@ -185,7 +183,7 @@ class CustomerRegistrationView(CreateView):
             next_url = self.request.GET.get("next")
             return next_url
         else:    
-            return self.get_success_url                       
+            return self.success_url                       
 
 class CustomerLogoutView(View):
     def get(self, request):
@@ -204,7 +202,7 @@ class CustomerLoginView(FormView):
         if usr is not None and usr.customer:
             login(self.request, usr)
         else:
-            return render(self.request,self.template_name, {"form": self.form_class, "error":"Invalid Credential"})    
+            return render(self.request, self.template_name, {"form": self.form_class, "error":"Invalid Credential"})    
         return super().form_valid(form)  
 
     def get_success_url(self):
@@ -212,4 +210,4 @@ class CustomerLoginView(FormView):
             next_url = self.request.GET.get("next")
             return next_url
         else:    
-            return self.get_success_url     
+            return self.success_url     
