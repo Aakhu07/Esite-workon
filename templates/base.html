@@ -97,7 +97,7 @@
                             </a>
                             <a href="" class="btn btn-cart">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span class="badge badge-info">{{request.session.cart_id}}</span>
+                                <span class="badge badge-info"></span>
                             </a>
                         </div>
                     </div>
@@ -109,20 +109,17 @@
 
   {% endblock %}
 
-                 <!-- Brand Start -->
+     <!-- Brand Start -->
     <div class="brand">
         <div class="container-fluid">
             <div class="brand-slider">
-                <div class="brand-item"><img src="{% static 'img/brand-1.png' %}" alt=""></div>
-                <div class="brand-item"><img src="{% static 'img/brand-2.png' %}" alt=""></div>
-                <div class="brand-item"><img src="{% static 'img/brand-3.png' %}" alt=""></div>
-                <div class="brand-item"><img src="{% static 'img/brand-4.png' %}" alt=""></div>
-                <div class="brand-item"><img src="{% static 'img/brand-5.png' %}" alt=""></div>
-                <div class="brand-item"><img src="{% static 'img/brand-6.png' %}" alt=""></div>
+                {% for brand in brands %}
+                <div class="brand-item"><img src="{{brand.image.url}}" alt="" width="150px" height="150px"></div>
+                {% endfor %}
             </div>
         </div>
     </div>
-                <!-- Brand End --> 
+    <!-- Brand End --> 
 
     <!-- Review Start -->
     <div class="review">

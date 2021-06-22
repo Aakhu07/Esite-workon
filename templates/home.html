@@ -26,15 +26,14 @@
                     </div>
                     <div class="col-md-6">
                         <div class="header-slider normal-slider">
+                            {% for slider in sliders %}
                             <div class="header-slider-item">
-                                <img src="{% static 'img/slider-1.jpg' %}" alt="Slider Image" width="800" height="400" />
+                                <img src="{{slider.image.url}}" alt="Slider Image" width="800" height="400" />
+                                <div class="header-slider-caption">
+                                    <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
+                                </div>
                             </div>
-                            <div class="header-slider-item">
-                                <img src="{% static 'img/slider-2.jpg' %}" alt="Slider Image" width="800" height="400" />
-                            </div>
-                            <div class="header-slider-item">
-                                <img src="{% static 'img/slider-3.jpg' %}" alt="Slider Image" width="800" height="400" />
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-md-3">

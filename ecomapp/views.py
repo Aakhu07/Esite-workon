@@ -22,6 +22,8 @@ class HomeView(EcomMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['product_list'] = Product.objects.all().order_by("-id")
         context['ads'] = Ad.objects.all()
+        context['sliders'] = Slider.objects.filter(status='active')
+        context['brands'] = Brand.objects.filter(status='active')
         return context
 
 class AllProductsView(EcomMixin, TemplateView):

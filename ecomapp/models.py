@@ -12,6 +12,20 @@ class Ad(models.Model):
     def __str__(self):
         return self.name
 
+class Brand(models.Model):
+    name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='products')
+    status = models.CharField(choices=STATUS, max_length=100)
+    def __str__(self):
+        return self.name
+
+class Slider(models.Model):
+    name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='products')
+    status = models.CharField(choices=STATUS, max_length=100)
+    def __str__(self):
+        return self.name        
+
 class Category(models.Model):
     title = models.CharField(max_length=200)
     logo = models.CharField(max_length=200)
