@@ -58,6 +58,7 @@
                             <a href="{% url 'ecomapp:allproducts' %}" class="nav-item nav-link active">Categories</a> |
                             {% if request.user.customer %}
                             Welcome {{request.user.username}} |
+                            <a href="{% url 'ecomapp:customerprofile' %}" class="nav-item nav-link active">My Profile</a> |
                             <a href="{% url 'ecomapp:customerlogout' %}" class="nav-item nav-link active">Logout</a> |
                             {% else %}
                             <a href="{% url 'ecomapp:customerregistration' %}" class="nav-item nav-link active">Registeration</a> |

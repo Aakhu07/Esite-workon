@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load humanize %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h3>Order Details</h3>
+            <hr>
+            <p><span class="font-weight-bold">Order ID = </span>#Order_{{ord_obj.id}}</p>
+            <p><span class="font-weight-bold">Order Status = </span>{{ord_obj.order_status}}</p>
+            <p><span class="font-weight-bold">Order ON = </span>{{ord_obj.created_at}}({{ord_obj.created_at|timesince}}) ago</p>
+            <p><span class="font-weight-bold">Order by = </span>By {{ord_obj.order_by}}</p>
+            <p><span class="font-weight-bold">Mobile Number = </span>{{ord_obj.mobile}}</p>
+            <p><span class="font-weight-bold">Shipping Address = </span>{{ord_obj.shipping_address}}</p>
+            <hr>
+            <hr>
+            <h4>Ordered Information</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Item</th>
+                        <th>Rate</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for cp in ord_obj.cart.cartproduct_set.all %}
+                        <td>{{forloop.counter}}</td>
+                        <td><a href="{% url 'ecomapp:productdetail' cp.product.slug %}" target="_blank">{{cp.product.title}}({{cp.product.id}})</a></td>
+                        <td>{{cp.rate}}</td>
+                        <td>{{cp.quantity}}</td>
+                        <td>{{cp.subtotal}}</td>
+                    </tr>    
+                    {% endfor %}
+                    <tr>
+                        <th colspan="4" class="text-right">Total = </th>
+                        <th>Rs {{ord_obj.total|intcomma}}/-</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
