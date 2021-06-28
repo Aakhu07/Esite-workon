@@ -1,0 +1,23 @@
+{% extends 'adminpages/adminbase.html' %}
+{% load static %}
+{% block content %}
+
+<div class="conatiner">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h3>Admin Login Form</h3>
+            <hr>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button class="btn">Admin Login</button>
+                {% if error %}
+                <li style="color: rgb(255, 0, 85);">{{error}}</li>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>        
+        
+
+ {% endblock %}

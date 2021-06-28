@@ -91,3 +91,11 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) 
     def __str__(self):
         return "Order: "+ str(self.id) 
+
+class Admin(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=20)
+    image = models.ImageField(upload_to="admins")
+    mobile = models.CharField(max_length=20)
+    def __str__(self):
+        return self.user.username

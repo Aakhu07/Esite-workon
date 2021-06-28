@@ -75,8 +75,20 @@
             </div>
             {% endfor %}    
         </div> 
-    </div>                   
-        
+    </div> 
+
+             <!-- Brand Start -->
+    <div class="brand">
+        <div class="container-fluid">
+            <div class="brand-slider">
+                {% for brand in brands %}
+                <div class="brand-item"><img src="{{brand.image.url}}" alt="" width="150px" height="150px"></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Brand End -->
+
         <!-- Call to Action Start -->
         <div class="call-to-action">
             <div class="container-fluid">

@@ -22,7 +22,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 {{form.as_p}}
-                <button class="btn">Customer Login<Form></Form></button>
+                <button class="btn">Customer Login</button>
                 {% if error %}
                 <li style="color: aqua;">{{error}}</li>
                 {% endif %}

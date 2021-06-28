@@ -46,11 +46,6 @@
         <div class="nav">
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-                    <a href="#" class="navbar-brand">MENU</a>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto">
                             <a href="{% url 'ecomapp:home' %}" class="nav-item nav-link active">Home</a> |
@@ -108,19 +103,7 @@
         <!-- Bottom Bar End -->
   {% block content %}
 
-  {% endblock %}
-
-     <!-- Brand Start -->
-    <div class="brand">
-        <div class="container-fluid">
-            <div class="brand-slider">
-                {% for brand in brands %}
-                <div class="brand-item"><img src="{{brand.image.url}}" alt="" width="150px" height="150px"></div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <!-- Brand End --> 
+  {% endblock %} 
 
     <!-- Review Start -->
     <div class="review">
