@@ -73,17 +73,17 @@
                     <div class="col-md-3">
                         <div class="logo">
                             <a href="/">
-                                <img src="{% static 'img/tiger.jpg' %}" height="60" width="60">
+                                <img src="{% static 'img/logo.png' %}">
                             </a>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <form method="GET">
+                        <form method="GET" action="{% url 'ecomapp:search' %}">
                         <div class="search">
-                            <input name="search" type="text" placeholder="Search" required>
+                            <input name="keyword" type="text" placeholder="Search  ...." required>
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </div>
-                            </form>
+                        </form>
                     </div>
                     <div class="col-md-3">
                         <div class="user">
