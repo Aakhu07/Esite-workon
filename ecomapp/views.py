@@ -1,3 +1,5 @@
+from django.core import paginator
+from django.http import request
 from ecomapp.forms import CheckoutForm
 from django.shortcuts import render, redirect
 from django.views.generic import View, TemplateView, CreateView, FormView, DetailView, ListView
@@ -5,6 +7,9 @@ from .models import *
 from .forms import CheckoutForm, CustomerRegistrationForm, CustomerLoginForm
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
+#this Q is for complex searc(watch django documentation for more)
+from django.core.paginator import Paginator
 
 class EcomMixin(object):
     def dispatch(self, request, *args, **kwargs):
@@ -20,10 +25,16 @@ class HomeView(EcomMixin, TemplateView):
     template_name = "home.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['product_list'] = Product.objects.all().order_by("-id")
+        context['category'] = Category.objects.all()
         context['ads'] = Ad.objects.all()
         context['sliders'] = Slider.objects.filter(status='active')
         context['brands'] = Brand.objects.filter(status='active')
+        all_products = Product.objects.all().order_by("-id")
+#order_by("-id") = new added products will be shown at first in product list        
+        paginator = Paginator(all_products, 15)
+        page_number = self.request.GET.get('page')
+        product_list = paginator.get_page(page_number)
+        context['product_list'] = product_list
         return context
 
 class AllProductsView(EcomMixin, TemplateView):
@@ -304,5 +315,11 @@ class SearchView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)  
         kw = self.request.GET.get("keyword")
-        
+#name of input element in searchtemplate is name=keyword so we use ("keyword")
+        results = Product.objects.filter(Q(title__contains=kw) | Q(description__icontains=kw))
+#if we do (title=kw) then, we have to search with exact names
+#if we do (title__contains=kw) then, any word same to title will be shown
+#if we do (description__contains=kw) then, any word same to description will be shown
+# | = this is or logic
+        context["results"]= results
         return context 

@@ -8,7 +8,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="{% url 'ecomapp:mycart' %}">Cart</a></li>
-            <li class="breadcrumb-item active"><a href="{% url 'ecomapp:customerregistration' %}>Register</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'ecomapp:customerregistration' %}">Register</a></li>
         </ul>
     </div>
 </div>
@@ -22,13 +22,22 @@
           {% for result in results %}
             <div class="row">
                 <div class="col-md-4">
-                    <img src="{{result.image.url}}" class="img-fluid" alt="">
+                    <img src="{{result.image.url}}" class="img-fluid" alt="" height="600" width="350">
                 </div>
-
+                <div class="col-md-8">
+                    <h4><a href="{% url 'ecomapp:productdetail' result.slug %}">{{result.title}}</a></h4>
+                    <p>{{result.description|truncatewords:50}}</p>
+<!--if we do truncatechars:40 then descriptions will be shown upto 40 words -->  
+                    <p>Return Policy = {{result.return_policy}}</p>
+                    <p>Warranty = {{result.warranty}}</p>
+                    <a href="{% url 'ecomapp:addtocart' result.id %}" class="btn btn-primary">Add To Cart</a>
+                </div>
             </div>
           {% endfor %} 
         </div>
     </div>
 </div>
+<hr>
+<hr>
 
 {%endblock%}
