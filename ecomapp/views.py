@@ -1,15 +1,18 @@
 from django.core import paginator
 from django.http import request
+from requests.models import Response
 from ecomapp.forms import CheckoutForm
 from django.shortcuts import render, redirect
 from django.views.generic import View, TemplateView, CreateView, FormView, DetailView, ListView
 from .models import *
 from .forms import CheckoutForm, CustomerRegistrationForm, CustomerLoginForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 #this Q is for complex searc(watch django documentation for more)
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+import requests
 
 class EcomMixin(object):
     def dispatch(self, request, *args, **kwargs):
@@ -31,7 +34,7 @@ class HomeView(EcomMixin, TemplateView):
         context['brands'] = Brand.objects.filter(status='active')
         all_products = Product.objects.all().order_by("-id")
 #order_by("-id") = new added products will be shown at first in product list        
-        paginator = Paginator(all_products, 15)
+        paginator = Paginator(all_products, 8)
         page_number = self.request.GET.get('page')
         product_list = paginator.get_page(page_number)
         context['product_list'] = product_list
@@ -173,9 +176,52 @@ class CheckoutView(EcomMixin, CreateView):
             form.instance.total = cart_obj.total
             form.instance.order_status = "Order Received"
             del self.request.session['cart_id']
+            order = form.save()
+            pm = form.cleaned_data.get("payment_method")
+            order = form.save()
+            if pm =="khalti":
+                return redirect(reverse("ecomapp:khalti") + "?o_id=" + str(order.id))
         else:
             return redirect("ecomapp:home")
         return super().form_valid(form) 
+
+class KhaltiView(View):
+    def get(self, request, *args, **kwargs):
+        o_id = request.GET.get("o_id")
+        order = Order.objects.get(id=o_id)
+        context = {
+            "order": order
+        }
+        return render(request,"khalti.html", context)  
+
+class KhaltiVerifyView(View):
+    def get(self, request, *args, **kwargs):
+        token = request.GET.get("token")
+        amount = request.GET.get("amount")
+        o_id = request.GET.get("order_id")
+        print(token, amount, o_id)
+        url = "https://khalti.com/api/v2/payment/verify/"
+        payload = {
+            "token": token,
+            "amount": amount
+        }
+        headers = {
+            "Authorization": "Key test_secret_key_e870cfff05194c559c7e89cab66ab904"
+# we have to have changed secret key            
+        }
+        order_obj = Order.objects.get(id=o_id)
+        response = requests.post(url, payload, headers = headers)
+        resp_dict = response.json()
+        if resp_dict.get("idx"):
+            success = True
+            order_obj.payment_completed = True
+            order_obj.save()
+        else:
+            success = False    
+        data = {
+            "sucess": success
+        }
+        return JsonResponse(data)
 
 class CustomerRegistrationView(CreateView):
     template_name = "customerregistration.html"
@@ -323,3 +369,5 @@ class SearchView(TemplateView):
 # | = this is or logic
         context["results"]= results
         return context 
+
+       

@@ -11,9 +11,11 @@
             <p><span class="font-weight-bold">Order ID = </span>#Order_{{ord_obj.id}}</p>
             <p><span class="font-weight-bold">Order Status = </span>{{ord_obj.order_status}}</p>
             <p><span class="font-weight-bold">Order ON = </span>{{ord_obj.created_at}}({{ord_obj.created_at|timesince}}) ago</p>
-            <p><span class="font-weight-bold">Order by = </span>By {{ord_obj.ordered_by}}</p>
+            <p><span class="font-weight-bold">Order by = </span>{{ord_obj.ordered_by}}</p>
             <p><span class="font-weight-bold">Mobile Number = </span>{{ord_obj.mobile}}</p>
             <p><span class="font-weight-bold">Shipping Address = </span>{{ord_obj.shipping_address}}</p>
+            <p><span class="font-weight-bold">Payment Information = </span>Using {{ord_obj.payment_method}} 
+                ({%if ord_obj.payment_completed %}Payment Completed{% else %}Not Paid{% endif %})</p>
             <hr>
             <hr>
             <h4>Ordered Information</h4>

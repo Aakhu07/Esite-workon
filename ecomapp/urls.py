@@ -24,4 +24,6 @@ urlpatterns = [
     path("admin-order-<int:pk>-change/", AdminOrderStatusChangeView.as_view(), name ="adminorderstatuschange"),
 
     path("search/", SearchView.as_view(), name ="search"),
+    path("khalti/", KhaltiView.as_view(), name="khalti"),
+    path("khalti-verify/", KhaltiVerifyView.as_view(), name="khaltiverify"),
 ]
